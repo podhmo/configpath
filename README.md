@@ -12,6 +12,8 @@ import (
 )
 
 func main() {
+	// e.g. cwd = /home/podhmo/go/src/github.com/podhmo/configpath
+
 	// lookup the directory has "bin" directory.
 	r, _ := configpath.Project("bin")
 
