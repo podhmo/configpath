@@ -1,5 +1,7 @@
 # configpath
 
+[![Build Status](https://travis-ci.org/podhmo/configpath.svg?branch=master)](https://travis-ci.org/podhmo/configpath)
+
 ## project
 
 ```go
