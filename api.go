@@ -10,8 +10,9 @@ type HomeResolver = home.Resolver
 
 // Project :
 func Project(pattern string) (*ProjectResolver, error) {
+	cwd := ""
 	strict := true
-	return project.New("", strict, pattern)
+	return project.New(cwd, strict, pattern)
 }
 
 // Home :
