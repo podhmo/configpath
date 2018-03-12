@@ -40,11 +40,14 @@ func TestRelative(t *testing.T) {
 	} {
 		c := c
 		t.Run(fmt.Sprintf("case%d", i), func(t *testing.T) {
-			r, err := New()
+			r, err := New(false)
 			if err != nil {
 				t.Fatal(err)
 			}
-			got := r.Relative(c.path)
+			got, err := r.Relative(c.path)
+			if err != nil {
+				t.Fatal(err)
+			}
 			if c.expected != got {
 				t.Errorf("expected %q, but got %q", c.expected, got)
 			}

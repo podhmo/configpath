@@ -9,21 +9,28 @@ import (
 
 // Resolver :
 type Resolver struct {
-	Base string
+	Base   string
+	Strict bool
 }
 
 // New :
-func New(cwd, pattern string) (*Resolver, error) {
+func New(cwd string, strict bool, pattern string) (*Resolver, error) {
 	path, err := lookup(cwd, pattern)
 	if err != nil {
 		return nil, err
 	}
-	return &Resolver{Base: path}, nil
+	return &Resolver{Base: path, Strict: strict}, nil
 }
 
 // Relative :
-func (r *Resolver) Relative(path string) string {
-	return filepath.Join(r.Base, path)
+func (r *Resolver) Relative(path string) (string, error) {
+	result := filepath.Join(r.Base, path)
+	if r.Strict {
+		if _, err := os.Stat(result); err != nil {
+			return "", err
+		}
+	}
+	return result, nil
 }
 
 func lookup(cwd, pattern string) (string, error) {

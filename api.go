@@ -9,11 +9,21 @@ type ProjectResolver = project.Resolver
 type HomeResolver = home.Resolver
 
 // Project :
-func Project(cwd, pattern string) (*ProjectResolver, error) {
-	return project.New(cwd, pattern)
+func Project(pattern string) (*ProjectResolver, error) {
+	strict := true
+	return project.New("", strict, pattern)
 }
 
 // Home :
 func Home() (*HomeResolver, error) {
-	return home.New()
+	strict := true
+	return home.New(strict)
+}
+
+// Must :
+func Must(s string, err error) string {
+	if err != nil {
+		panic(err)
+	}
+	return s
 }

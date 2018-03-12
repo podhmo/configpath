@@ -6,11 +6,15 @@ import (
 )
 
 func Test(t *testing.T) {
-	r, err := New("", ".git")
+	r, err := New("", false, ".git")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := os.Stat(r.Relative("LICENSE")); err != nil {
+	got, err := r.Relative("LICENSE")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(got); err != nil {
 		t.Fatalf("relative README.md. but got %s", err)
 	}
 }
