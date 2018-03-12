@@ -13,6 +13,7 @@ func TestRelative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	for i, c := range []struct {
 		path     string
 		expected string
@@ -39,7 +40,11 @@ func TestRelative(t *testing.T) {
 	} {
 		c := c
 		t.Run(fmt.Sprintf("case%d", i), func(t *testing.T) {
-			got, _ := Relative(c.path)
+			r, err := New()
+			if err != nil {
+				t.Fatal(err)
+			}
+			got := r.Relative(c.path)
 			if c.expected != got {
 				t.Errorf("expected %q, but got %q", c.expected, got)
 			}

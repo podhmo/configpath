@@ -5,16 +5,26 @@ import (
 	"path/filepath"
 )
 
-// Relative :
-func Relative(name string) (string, error) {
+// Resolver :
+type Resolver struct {
+	U *user.User
+}
+
+// New :
+func New() (*Resolver, error) {
 	u, err := user.Current()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return filepath.Join(u.HomeDir, name), nil
+	return &Resolver{U: u}, nil
+}
+
+// Relative :
+func (r *Resolver) Relative(name string) string {
+	return filepath.Join(r.U.HomeDir, name)
 }
 
 // ConfigDir :
-func ConfigDir(name string) (string, error) {
-	return Relative(filepath.Join(".config", name))
+func (r *Resolver) ConfigDir(name string) string {
+	return r.Relative(filepath.Join(".config", name))
 }
